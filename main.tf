@@ -62,6 +62,46 @@ module "secrets_manager" {
   source = "./modules/secrets_manager"
 }
 
+output "alb_arn" {
+  value = module.alb.alb_arn
+}
+
+output "target_group_arn" {
+  value = module.alb.target_group_arn
+}
+output "api_endpoint" {
+  value = module.api_gateway.api_endpoint
+}
+output "user_pool_id" {
+  value = module.cognito.user_pool_id
+}
+output "user_pool_client_id" {
+  value = module.cognito.user_pool_client_id
+}
+output "dynamodb_table_name" {
+  value = module.database.dynamodb_table_name
+}
+output "log_group_name" {
+  value = module.monitoring.log_group_name
+}
+output "bucket_name" {
+  value = module.s3.bucket_name
+}
+output "waf_acl_id" {
+  value = module.security.waf_acl_id
+}
+output "alb_security_group_id" {
+  value = module.security.alb_security_group_id
+}
+output "ecs_security_group_id" {
+  value = module.security.ecs_security_group_id
+}
 output "vpc_id" {
   value = module.vpc.vpc_id
+}
+output "public_subnets" {
+  value = module.vpc.public_subnets
+}
+output "private_subnets" {
+  value = module.vpc.private_subnets
 }
