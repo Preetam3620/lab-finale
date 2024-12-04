@@ -61,3 +61,7 @@ module "cognito" {
 module "secrets_manager" {
   source = "./modules/secrets_manager"
 }
+
+output "vpc_id" {
+  value = module.vpc.vpc_id
+}
