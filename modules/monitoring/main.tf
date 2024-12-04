@@ -80,13 +80,6 @@ resource "aws_config_configuration_recorder" "main" {
   }
 }
 
-resource "aws_config_delivery_channel" "main" {
-  name           = "invoice-processing-config-delivery-channel"
-  s3_bucket_name = aws_s3_bucket.config.id
-  sns_topic_arn  = aws_sns_topic.config.arn
-
-  depends_on = [aws_config_configuration_recorder.main]
-}
 
 resource "aws_s3_bucket" "config" {
   bucket = "invoice-processing-config-${data.aws_caller_identity.current.account_id}"

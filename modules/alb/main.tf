@@ -17,7 +17,7 @@ resource "aws_lb_listener" "front_end" {
   port              = "443"
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = aws_acm_certificate.main.arn
+  certificate_arn   = aws_acm_certificate.self_signed.arn
   
   default_action {
     type             = "forward"
@@ -43,17 +43,30 @@ resource "aws_lb_target_group" "main" {
   }
 }
 
-resource "aws_acm_certificate" "main" {
-  domain_name       = "invoice.example.com"
-  validation_method = "DNS"
+resource "tls_private_key" "example" {
+  algorithm = "RSA"
+}
 
-  tags = {
-    Name = "Invoice Processing Certificate"
+resource "tls_self_signed_cert" "example" {
+  private_key_pem = tls_private_key.example.private_key_pem
+
+  subject {
+    common_name  = "example.com"
+    organization = "San Jose State University"
   }
 
-  lifecycle {
-    create_before_destroy = true
-  }
+  validity_period_hours = 12
+
+  allowed_uses = [
+    "key_encipherment",
+    "digital_signature",
+    "server_auth",
+  ]
+}
+
+resource "aws_acm_certificate" "self_signed" {
+  private_key      = tls_private_key.example.private_key_pem
+  certificate_body = tls_self_signed_cert.example.cert_pem
 }
 
 output "alb_arn" {

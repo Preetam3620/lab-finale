@@ -1,10 +1,6 @@
 resource "aws_secretsmanager_secret" "main" {
   name        = "invoice-processing-secrets"
   description = "Secrets for Invoice Processing System"
-
-  # rotation_rules {
-  #   automatically_after_days = 30
-  # }
 }
 
 resource "aws_secretsmanager_secret_version" "main" {
