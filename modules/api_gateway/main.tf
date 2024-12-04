@@ -3,14 +3,6 @@ resource "aws_api_gateway_rest_api" "main" {
   description = "API Gateway for Invoice Processing System"
 }
 
-resource "aws_api_gateway_deployment" "main" {
-  rest_api_id = aws_api_gateway_rest_api.main.id
-  stage_name  = "dev"
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
 
 resource "aws_api_gateway_resource" "main" {
   rest_api_id = aws_api_gateway_rest_api.main.id
